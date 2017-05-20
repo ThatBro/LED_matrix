@@ -419,10 +419,10 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 			gamefield[loc+width+1] = piece.col;
 			*/
 			
-			block1 = &gamefield[loc];
-			block2 = &gamefield[loc+1];
-			block3 = &gamefield[loc+width];
-			block4 = &gamefield[loc+width+1];
+			block1 = &(gamefield[loc]);
+			block2 = &(gamefield[loc+1]);
+			block3 = &(gamefield[loc+width]);
+			block4 = &(gamefield[loc+width+1]);
 			
 			break;
 		case TETRIS_LINE:
