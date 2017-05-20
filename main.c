@@ -1216,7 +1216,7 @@ int main(int argc, char *argv[])
 
     if (clear_on_exit) {
 	matrix_clear();
-	matrix_render();
+	matrix_render(10000);
 	ws2811_render(&ledstring);
     }
 
