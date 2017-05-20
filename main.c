@@ -616,10 +616,10 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 			break;
 		default:
 			return -1;
-	}
+	}//for different tetris blocks compare different fields
 	if (!((*block1 == 0)&&(*block2 == 0)&&(*block3 == 0)&&(*block4 == 0))) {
 		return 0;
-	}
+	}//check if all fields aren't occupied
 	*block1 = piece.col;
 	*block2 = piece.col;
 	*block3 = piece.col;
@@ -627,6 +627,55 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 	return 1;
 }
 
+tetris_piece get_random_tetris_piece() {
+	enum tetris_pieces t;
+	int w, h;
+	switch (rand()%8) {
+		case 0:
+			t = TETRIS_SQR;
+			w = 2;
+			h = 2;
+			break;
+		case 1:
+			t = TETRIS_LINE;
+			w = 4;
+			h = 1;
+			break;
+		case 2:
+			t = TETRIS_T;
+			w = 3;
+			h = 2;
+			break;
+		case 3:
+			t = TETRIS_L;
+			w = 2;
+			h = 3;
+			break;
+		case 4:
+			t = TETRIS_IL;
+			w = 2;
+			h = 3;
+			break;
+		case 5:
+			t = TETRIS_S;
+			w = 3;
+			h = 2;
+			break;
+		case 6:
+			t = TETRIS_IS;
+			w = 3;
+			h = 2;
+			break;
+	}
+	tetris_piece piece = {
+		.col = ((rand()%256)<<16) + ((rand()%256)<<8) + (rand()%256);
+		.type = t;
+		.w = w;
+		.h = h;
+		.rot = 0;
+	}
+	return piece;
+}
 
 int render_anim_tetris(void) {
 	ws2811_led_t gamefield[width*height];
