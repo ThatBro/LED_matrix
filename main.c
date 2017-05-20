@@ -210,7 +210,10 @@ void matrix_render(void)
 		}
 		i += 2;
 	}
-	
+	ws2811_return_t ret;
+	if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS) {
+		fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
+	}
 }
 
 int render_image_skull(float anim) {
@@ -401,6 +404,12 @@ struct tetris_piece {
 	enum tetris_pieces type;
 };
 
+struct tetris_gamestate {
+	int activepiece;
+	int loc;
+	struct tetris_piece piece;
+	ws2811_led_t gamefield[width*height];
+};
 
 int tetris_game_end(ws2811_led_t* gamefield) {
 	int i;
@@ -916,13 +925,18 @@ void draw_tetris_gamefield(ws2811_led_t* gamefield) {
 		matrix[i] = gamefield[i];
 	}
 }
- 
-int render_anim_tetris(int speed) {
-	ws2811_led_t gamefield[width*height];
+
+void clear_tetris_gamefield(ws2811_led_t* gamefield) {
 	int i;
 	for (i = 0; i < width*height; i++) {
 		gamefield[i] = 0;
 	}
+}
+ 
+int render_anim_tetris(int speed) {
+	ws2811_led_t gamefield[width*height];
+	int i;
+	clear_tetris_gamefield(gamefield);
 	//int activepiece = 0;
 	while (running&&(!tetris_game_end(gamefield))) {
 		usleep(1000000/speed);
@@ -1208,12 +1222,14 @@ int main(int argc, char *argv[])
 	*/
 		//sw = (sw ? 0: 1);
         //matrix_render();
-
+				
+				/*
         if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
             break;
         }
+        */
 
         // 15 frames /sec
         loop_var++;
