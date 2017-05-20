@@ -920,6 +920,14 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 	*block4 = piece.col;
 }
 
+void rotate_tetris_piece(struct tetris_piece piece) {
+	piece.rot += 1;
+	int tmp = piece.w;
+	piece.w = piece.h;
+	piece.h = tmp;
+	piece.rot = piece.rot%4;
+}
+
 void draw_tetris_gamefield(ws2811_led_t* gamefield) {
 	int i;
 	for (i = 0; i < width*height; i++) {
@@ -942,7 +950,7 @@ int render_anim_tetris(int speed) {
 		usleep(1000000/speed);
 		matrix_clear();
 		struct tetris_piece piece = get_random_tetris_piece();
-		int loc = rand()%width;
+		int loc = rand()%(width-piece.w);
 		while (tetris_fit_piece(gamefield,loc,piece,0)&&running) {
 			usleep(1000000/speed);
 			draw_tetris_gamefield(gamefield);
@@ -950,14 +958,14 @@ int render_anim_tetris(int speed) {
 			loc += width;
 			//usleep(1000000/speed);
 			matrix_render();
-			printf("falling piece...\n");
+			//printf("falling piece...\n");
 			
 		}
 		loc -= width;
 		tetris_fit_piece(gamefield,loc,piece,1);
 		draw_tetris_gamefield(gamefield);
 		matrix_render();
-		printf("generate new piece...\n");
+		//printf("generate new piece...\n");
 		
 	}
 	
