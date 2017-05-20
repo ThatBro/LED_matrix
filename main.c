@@ -196,7 +196,7 @@ void matrix_render_oud(void)
     }
 }
 
-void matrix_render(void)
+void matrix_render(int time)
 {
 	int col = 1, row = 0;
 	int i = 0;
@@ -210,6 +210,7 @@ void matrix_render(void)
 		}
 		i += 2;
 	}
+	usleep(time);
 }
 
 int render_image_skull(float anim) {
@@ -931,14 +932,12 @@ int render_anim_tetris(int speed) {
 			draw_tetris_gamefield(gamefield);
 			draw_tetris_piece(piece,loc);
 			loc += width;
-			matrix_render();
-			usleep(1000000/speed);
+			matrix_render(1000000/speed);
 			printf("falling piece...\n");
 		}
 		loc -= width;
 		tetris_fit_piece(gamefield,loc,piece,1);
-		matrix_render();
-		usleep(1000000/speed);
+		matrix_render(1000000/speed);
 		printf("generate new piece...\n");
 	}
 	
