@@ -668,7 +668,7 @@ tetris_piece get_random_tetris_piece() {
 			h = 2;
 			break;
 	}
-	tetris_piece piece = {
+	struct tetris_piece piece = {
 		.col = ((rand()%256)<<16) + ((rand()%256)<<8) + (rand()%256),
 		.type = t,
 		.w = w,
