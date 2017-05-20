@@ -1,3 +1,7 @@
+THIS SOFTWARE IS BUILT ON TOP OF THE LIBRARY OF Jeremy Garff.
+(c) 2014, jgarff, https://github.com/jgarff/rpi_ws281x
+All modifications that are made by me (mainly in the file main.c) follow the following licence:
+
 Mozilla Public License Version 2.0
 ==================================
 
