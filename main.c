@@ -474,7 +474,7 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 				block2 = &(gamefield[loc+1]);
 				block3 = &(gamefield[loc+2]);
 				block4 = &(gamefield[loc+width+1]);
-				if (*block4 != gamefield[loc+3]) {
+				if (*block4 != gamefield[loc+width+1]) {
 					printf("ERROR IN ASSIGNING POINTERS\n");
 					return -1;
 				}
