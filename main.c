@@ -923,7 +923,7 @@ int render_anim_tetris(int speed) {
 		gamefield[i] = 0;
 	}
 	//int activepiece = 0;
-	while (running&&(!tetris_game_end(gamedfield))) {
+	while (running&&(!tetris_game_end(gamefield))) {
 		matrix_clear();
 		struct tetris_piece piece = get_random_tetris_piece();
 		int loc = rand()%width;
