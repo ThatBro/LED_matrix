@@ -404,12 +404,13 @@ struct tetris_piece {
 	enum tetris_pieces type;
 };
 
+/*
 struct tetris_gamestate {
 	int activepiece;
 	int loc;
 	struct tetris_piece piece;
 	ws2811_led_t gamefield[width*height];
-};
+};*/
 
 int tetris_game_end(ws2811_led_t* gamefield) {
 	int i;
@@ -990,11 +991,11 @@ void matrix_bottom(void)
             dotspos[i] = 0;
         }
 
-		if (ledstring.channel[0].strip_type == SK6812_STRIP_RGBW) {
-			matrix[dotspos[i] + (height - 1) * width] = dotcolors_rgbw[i];
-		} else {
-			matrix[dotspos[i] + (height - 1) * width] = dotcolors[i];
-		}
+			if (ledstring.channel[0].strip_type == SK6812_STRIP_RGBW) {
+				matrix[dotspos[i] + (height - 1) * width] = dotcolors_rgbw[i];
+			} else {
+				matrix[dotspos[i] + (height - 1) * width] = dotcolors[i];
+			}
     }
 }
 
