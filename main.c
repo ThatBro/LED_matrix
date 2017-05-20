@@ -368,6 +368,7 @@ int render_image_skull(float anim) {
 
 int render_anim_fire(float anim) {
 	
+	return 0;
 }
 
 enum tetris_pieces {
@@ -383,7 +384,7 @@ enum tetris_pieces {
 struct tetris_piece {
 	int w,h,rot;
 	ws2811_led_t col;
-	tetris_pieces type;
+	enum tetris_pieces type;
 };
 
 
@@ -496,7 +497,7 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, tetris_pieces piece) {
 		default:
 			return -1;
 	}
-	
+	return 1;
 }
 
 
