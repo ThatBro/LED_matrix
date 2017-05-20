@@ -716,7 +716,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 			block3 = &(matrix[loc+width]);
 			block4 = &(matrix[loc+width+1]);
 			if (*block4 != matrix[loc+width+1]) {
-				printf("ERROR IN ASSIGNING POINTERS\n");
+				//printf("ERROR IN ASSIGNING POINTERS\n");
 				return;
 			}
 			
@@ -728,7 +728,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+2]);
 				block4 = &(matrix[loc+3]);
 				if (*block4 != matrix[loc+3]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -738,7 +738,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width*2]);
 				block4 = &(matrix[loc+width*3]);
 				if (*block4 != matrix[loc+width*3]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -749,8 +749,8 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block2 = &(matrix[loc+1]);
 				block3 = &(matrix[loc+2]);
 				block4 = &(matrix[loc+width+1]);
-				if (*block4 != matrix[loc+3]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+				if (*block4 != matrix[loc+width+1]) {
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -760,7 +760,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width+1]);
 				block4 = &(matrix[loc+width*2+1]);
 				if (*block4 != matrix[loc+width*2+1]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -770,7 +770,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width+1]);
 				block4 = &(matrix[loc+width+2]);
 				if (*block4 != matrix[loc+width+2]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -780,7 +780,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width+1]);
 				block4 = &(matrix[loc+width*2]);
 				if (*block4 != matrix[loc+width*2]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -792,7 +792,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width*2]);
 				block4 = &(matrix[loc+width*2+1]);
 				if (*block4 != matrix[loc+width*2+1]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -802,7 +802,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+2]);
 				block4 = &(matrix[loc+width]);
 				if (*block4 != matrix[loc+width]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -812,7 +812,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width+1]);
 				block4 = &(matrix[loc+width*2+1]);
 				if (*block4 != matrix[loc+width*2+1]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -822,7 +822,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width+1]);
 				block4 = &(matrix[loc+width+2]);
 				if (*block4 != matrix[loc+width+2]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -834,7 +834,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width*2]);
 				block4 = &(matrix[loc+width*2+1]);
 				if (*block4 != matrix[loc+width*2+1]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -844,7 +844,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width+1]);
 				block4 = &(matrix[loc+width+2]);
 				if (*block4 != matrix[loc+width+2]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -854,7 +854,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width]);
 				block4 = &(matrix[loc+width*2]);
 				if (*block4 != matrix[loc+width*2]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -864,7 +864,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+2]);
 				block4 = &(matrix[loc+width+2]);
 				if (*block4 != matrix[loc+width+2]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -876,7 +876,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width]);
 				block4 = &(matrix[loc+width+1]);
 				if (*block4 != matrix[loc+width+1]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -886,7 +886,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width+1]);
 				block4 = &(matrix[loc+width*2+1]);
 				if (*block4 != matrix[loc+width*2+1]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
+					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
 			}
@@ -898,7 +898,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width+1]);
 				block4 = &(matrix[loc+width+2]);
 				if (*block4 != matrix[loc+width+2]) {
-					printf("ERROR IN ASSIGNING POINTERS");
+					//printf("ERROR IN ASSIGNING POINTERS");
 					return;
 				}
 			}
@@ -908,7 +908,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block3 = &(matrix[loc+width+1]);
 				block4 = &(matrix[loc+width*2]);
 				if (*block4 != matrix[loc+width*2]) {
-					printf("ERROR IN ASSIGNING POINTERS");
+					//printf("ERROR IN ASSIGNING POINTERS");
 					return;
 				}
 			}
