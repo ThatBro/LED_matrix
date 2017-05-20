@@ -401,7 +401,7 @@ int tetris_game_end(ws2811_led_t* gamefield) {
 	return 0;
 }
 
-int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece) {
+int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece, int draw) {
 	if (((loc%width)+(piece.w-1) > width)||((loc/height)+(piece.h-1) > height)||(loc < 0)) {
 		return 0;
 	}
@@ -620,10 +620,12 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 	if (!((*block1 == 0)&&(*block2 == 0)&&(*block3 == 0)&&(*block4 == 0))) {
 		return 0;
 	}//check if all fields aren't occupied
-	*block1 = piece.col;
-	*block2 = piece.col;
-	*block3 = piece.col;
-	*block4 = piece.col;
+	if (draw) {
+		*block1 = piece.col;
+		*block2 = piece.col;
+		*block3 = piece.col;
+		*block4 = piece.col;
+	}
 	return 1;
 }
 
@@ -675,19 +677,254 @@ struct tetris_piece get_random_tetris_piece() {
 		.h = h,
 		.rot = 0
 	};
-	
 	return piece;
 }
 
-int render_anim_tetris(void) {
+void draw_tetris_piece (struct tetris_piece piece, int loc) {
+	ws2811_led_t* block1 = NULL;
+	ws2811_led_t* block2 = NULL;
+	ws2811_led_t* block3 = NULL;
+	ws2811_led_t* block4 = NULL;
+	switch (piece.type) {
+		case TETRIS_SQR:			
+			block1 = &(matrix[loc]);
+			block2 = &(matrix[loc+1]);
+			block3 = &(matrix[loc+width]);
+			block4 = &(matrix[loc+width+1]);
+			if (*block4 != matrix[loc+width+1]) {
+				printf("ERROR IN ASSIGNING POINTERS");
+				return -1;
+			}
+			
+			break;
+		case TETRIS_LINE:
+			if ((piece.rot == 0)||(piece.rot == 2)) {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+1]);
+				block3 = &(matrix[loc+2]);
+				block4 = &(matrix[loc+3]);
+				if (*block4 != matrix[loc+3]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else { 
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+width]);
+				block3 = &(matrix[loc+width*2]);
+				block4 = &(matrix[loc+width*3]);
+				if (*block4 != matrix[loc+width*3]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			break;
+		case TETRIS_T:
+			if (piece.rot == 0) {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+1]);
+				block3 = &(matrix[loc+2]);
+				block4 = &(matrix[loc+width+1]);
+				if (*block4 != matrix[loc+3]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else if (piece.rot == 1) {
+				block1 = &(matrix[loc+1]);
+				block2 = &(matrix[loc+width]);
+				block3 = &(matrix[loc+width+1]);
+				block4 = &(matrix[loc+width*2+1]);
+				if (*block4 != matrix[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else if (piece.rot == 2) {
+				block1 = &(matrix[loc+1]);
+				block2 = &(matrix[loc+width]);
+				block3 = &(matrix[loc+width+1]);
+				block4 = &(matrix[loc+width+2]);
+				if (*block4 != matrix[loc+width+2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+width]);
+				block3 = &(matrix[loc+width+1]);
+				block4 = &(matrix[loc+width*2]);
+				if (*block4 != matrix[loc+width*2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			break;
+		case TETRIS_L:
+			if (piece.rot == 0) {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+width]);
+				block3 = &(matrix[loc+width*2]);
+				block4 = &(matrix[loc+width*2+1]);
+				if (*block4 != matrix[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else if (piece.rot == 1) {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+1]);
+				block3 = &(matrix[loc+2]);
+				block4 = &(matrix[loc+width]);
+				if (*block4 != matrix[loc+width]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else if (piece.rot == 2) {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+1]);
+				block3 = &(matrix[loc+width+1]);
+				block4 = &(matrix[loc+width*2+1]);
+				if (*block4 != matrix[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else {
+				block1 = &(matrix[loc+2]);
+				block2 = &(matrix[loc+width]);
+				block3 = &(matrix[loc+width+1]);
+				block4 = &(matrix[loc+width+2]);
+				if (*block4 != matrix[loc+width+2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			break;
+		case TETRIS_IL:
+			if (piece.rot == 0) {
+				block1 = &(gamefield[loc+1]);
+				block2 = &(gamefield[loc+width+1]);
+				block3 = &(gamefield[loc+width*2]);
+				block4 = &(gamefield[loc+width*2+1]);
+				if (*block4 != gamefield[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else if (piece.rot == 1) {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+width]);
+				block3 = &(matrix[loc+width+1]);
+				block4 = &(matrix[loc+width+2]);
+				if (*block4 != matrix[loc+width+2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else if (piece.rot == 2) {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+1]);
+				block3 = &(matrix[loc+width]);
+				block4 = &(matrix[loc+width*2]);
+				if (*block4 != matrix[loc+width*2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+1]);
+				block3 = &(matrix[loc+2]);
+				block4 = &(matrix[loc+width+2]);
+				if (*block4 != matrix[loc+width+2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			break;
+		case TETRIS_S:
+			if ((piece.rot == 0)&&(piece.rot == 2)) {
+				block1 = &(matrix[loc+1]);
+				block2 = &(matrix[loc+2]);
+				block3 = &(matrix[loc+width]);
+				block4 = &(matrix[loc+width+1]);
+				if (*block4 != matrix[loc+width+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+width]);
+				block3 = &(matrix[loc+width+1]);
+				block4 = &(matrix[loc+width*2+1]);
+				if (*block4 != matrix[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			break;
+		case TETRIS_IS:
+			if ((piece.rot == 0)||(piece.rot == 2)) {
+				block1 = &(matrix[loc]);
+				block2 = &(matrix[loc+1]);
+				block3 = &(matrix[loc+width+1]);
+				block4 = &(matrix[loc+width+2]);
+				if (*block4 != matrix[loc+width+2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			else {
+				block1 = &(matrix[loc+1]);
+				block2 = &(matrix[loc+width]);
+				block3 = &(matrix[loc+width+1]);
+				block4 = &(matrix[loc+width*2]);
+				if (*block4 != matrix[loc+width*2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
+			}
+			break;
+	}
+	*block1 = piece.col;
+	*block2 = piece.col;
+	*block3 = piece.col;
+	*block4 = piece.col;
+}
+
+void draw_tetris_gamefield(ws2811_led_t* gamefield) {
+	int i;
+	for (i = 0; i < width*height; i++) {
+		matrix[i] = gamefield[i];
+	}
+}
+ 
+int render_anim_tetris(int speed) {
 	ws2811_led_t gamefield[width*height];
 	int i;
 	for (i = 0; i < width*height; i++) {
 		gamefield[i] = 0;
 	}
-	int game = 1;
-	while (running&&game) {
-		
+	int activepiece = 0;
+	while (running&&(!tetris_game_end(gamedfield))) {
+		matrix_clear();
+		struct tetris_piece piece = get_random_tetris_piece();
+		int loc = rand()%width;
+		while (tetris_fit_piece(gamefield,loc,piece,0)&&running) {
+			draw_tetris_gamefield(gamefield);
+			draw_tetris_piece(piece,loc);
+			loc += width;
+			matrix_render();
+			usleep(1000000/speed);
+		}
+		loc -= width;
+		tetris_fit_piece(gamefield,loc,piece,1);
+		matrix_render();
+		usleep(1000000/speed);
 	}
 	
 	
@@ -942,32 +1179,15 @@ int main(int argc, char *argv[])
         fprintf(stderr, "ws2811_init failed: %s\n", ws2811_get_return_t_str(ret));
         return ret;
     }
-    
-   // int last = height*width -1;
-    /*
-    int row = 0;
-    int col = 1;
-    int i = 0;
-    while ( row < height ) {
-		//adj_matrix[i] = matrix[(width-col)*height+row+1];
-		//adj_matrix[i+1] = matrix[(width-col)*height-row];
-		col += 2;
-		if (col > width) {
-			row++;
-			col = 1;
-		}
-		i++;
-	}
-	int sw = 0;
-    */
     //int sw = 0;
     //ws2811_led_t color = 1;
     int loop_var = 0;
     while (running)
     {
+				render_anim_tetris(10);
         //matrix_raise();
         //matrix_bottom();
-        render_image_skull(sin(((float)loop_var)));
+        //render_image_skull(sin(((float)loop_var)));
         //int j;
         //ws2811_led_t color = 0;
 	/*
@@ -980,7 +1200,7 @@ int main(int argc, char *argv[])
 		}
 	*/
 		//sw = (sw ? 0: 1);
-        matrix_render();
+        //matrix_render();
 
         if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
         {
