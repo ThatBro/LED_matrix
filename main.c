@@ -933,11 +933,13 @@ int render_anim_tetris(int speed) {
 			loc += width;
 			matrix_render();
 			usleep(1000000/speed);
+			printf("falling piece...\n");
 		}
 		loc -= width;
 		tetris_fit_piece(gamefield,loc,piece,1);
 		matrix_render();
 		usleep(1000000/speed);
+		printf("generate new piece...\n");
 	}
 	
 	
@@ -1184,7 +1186,7 @@ int main(int argc, char *argv[])
     int loop_var = 0;
     while (running)
     {
-				render_anim_tetris(10);
+				render_anim_tetris(100);
         //matrix_raise();
         //matrix_bottom();
         //render_image_skull(sin(((float)loop_var)));
