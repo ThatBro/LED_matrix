@@ -934,13 +934,13 @@ int render_anim_tetris(int speed) {
 			loc += width;
 			usleep(1000000/speed);
 			matrix_render();
-			printf("falling piece...\n");
+			//printf("falling piece...\n");
 		}
 		loc -= width;
 		tetris_fit_piece(gamefield,loc,piece,1);
 		usleep(1000000/speed);
 		matrix_render();
-		printf("generate new piece...\n");
+		//printf("generate new piece...\n");
 	}
 	
 	
