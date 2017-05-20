@@ -378,13 +378,13 @@ enum tetris_pieces {
 	TETRIS_S,
 	TETRIS_IL,
 	TETRIS_IS
-}
+};
 
 struct tetris_piece {
 	int w,h,rot;
 	ws2811_led_t col;
 	tetris_pieces type;
-}
+};
 
 
 int tetris_game_end(ws2811_led_t* gamefield) {
@@ -501,7 +501,7 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, tetris_pieces piece) {
 
 
 int render_anim_tetris(void) {
-	ws2811_led_t gamefield[width][height];
+	ws2811_led_t gamefield[width*height];
 	int i;
 	for (i = 0; i < width*height; i++) {
 		gamefield[i] = 0;
