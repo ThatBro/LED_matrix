@@ -749,7 +749,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block2 = &(matrix[loc+1]);
 				block3 = &(matrix[loc+2]);
 				block4 = &(matrix[loc+width+1]);
-				if (*block4 != matrix[loc+width+1]) {
+				if (*block4 != matrix[loc+3]) {
 					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
@@ -955,9 +955,10 @@ int render_anim_tetris(int speed) {
 			usleep(1000000/speed);
 			draw_tetris_gamefield(gamefield);
 			draw_tetris_piece(piece,loc);
+			matrix_render();
 			loc += width;
 			//usleep(1000000/speed);
-			matrix_render();
+			
 			//printf("falling piece...\n");
 			
 		}
