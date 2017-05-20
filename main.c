@@ -430,7 +430,7 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 				if (!((gamefield[loc] == 0)&&(gamefield[loc+1] == 0)&&(gamefield[loc+2] == 0)&&(gamefield[loc+3] == 0))) {
 					return 0;
 				}
-				gamefield[loc] = 
+				//gamefield[loc];
 			}
 			else { 
 				
