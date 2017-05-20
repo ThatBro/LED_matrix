@@ -674,9 +674,9 @@ tetris_piece get_random_tetris_piece() {
 		.h = h;
 		.rot = 0;
 	}
-	t = TETRIS_SQR;
-	w = 0;
-	h = 0;
+	if (t == 0&&w == 0&&h == 0) {
+		return -1;
+	}//dit is hier voor de "unused variable error"
 	return piece;
 }
 
