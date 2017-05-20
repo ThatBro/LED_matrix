@@ -370,12 +370,6 @@ int render_anim_fire(float anim) {
 	
 }
 
-struct tetris_piece {
-	int w,h,rot;
-	ws2811_led_t col;
-	tetris_pieces type;
-}
-
 enum tetris_pieces {
 	TETRIS_SQR,
 	TETRIS_LINE,
@@ -385,6 +379,13 @@ enum tetris_pieces {
 	TETRIS_IL,
 	TETRIS_IS
 }
+
+struct tetris_piece {
+	int w,h,rot;
+	ws2811_led_t col;
+	tetris_pieces type;
+}
+
 
 int tetris_game_end(ws2811_led_t* gamefield) {
 	int i;
