@@ -167,6 +167,19 @@ ws2811_led_t fullcolors[] = {
 	
 };
 
+void matrix_clear(void)
+{
+    int x, y;
+
+    for (y = 0; y < (height ); y++)
+    {
+        for (x = 0; x < width; x++)
+        {
+            matrix[y * width + x] = 0;
+        }
+    }
+}
+
 void matrix_render_oud(void)
 {
     int x, y;
@@ -779,7 +792,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block4 = &(matrix[loc+width]);
 				if (*block4 != matrix[loc+width]) {
 					printf("ERROR IN ASSIGNING POINTERS");
-					return -1;
+					return;
 				}
 			}
 			else if (piece.rot == 2) {
@@ -909,7 +922,7 @@ int render_anim_tetris(int speed) {
 	for (i = 0; i < width*height; i++) {
 		gamefield[i] = 0;
 	}
-	int activepiece = 0;
+	//int activepiece = 0;
 	while (running&&(!tetris_game_end(gamedfield))) {
 		matrix_clear();
 		struct tetris_piece piece = get_random_tetris_piece();
@@ -940,19 +953,6 @@ void matrix_raise(void)
         for (x = 0; x < width; x++)
         {
             matrix[y * width + x] = matrix[(y + 1)*width + x];
-        }
-    }
-}
-
-void matrix_clear(void)
-{
-    int x, y;
-
-    for (y = 0; y < (height ); y++)
-    {
-        for (x = 0; x < width; x++)
-        {
-            matrix[y * width + x] = 0;
         }
     }
 }
