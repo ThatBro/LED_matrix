@@ -1186,7 +1186,7 @@ int main(int argc, char *argv[])
     int loop_var = 0;
     while (running)
     {
-				render_anim_tetris(100);
+				render_anim_tetris(1000);
         //matrix_raise();
         //matrix_bottom();
         //render_image_skull(sin(((float)loop_var)));
@@ -1212,7 +1212,7 @@ int main(int argc, char *argv[])
 
         // 15 frames /sec
         loop_var++;
-        usleep(1000000 / 60);
+        usleep(1000000 / 1000);
     }
 
     if (clear_on_exit) {
