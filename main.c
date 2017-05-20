@@ -955,7 +955,7 @@ int render_anim_tetris(int speed) {
 		}
 		loc -= width;
 		tetris_fit_piece(gamefield,loc,piece,1);
-		
+		draw_tetris_gamefield(gamefield);
 		matrix_render();
 		printf("generate new piece...\n");
 		
