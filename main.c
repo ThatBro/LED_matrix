@@ -196,7 +196,7 @@ void matrix_render_oud(void)
     }
 }
 
-void matrix_render(int time)
+void matrix_render(void)
 {
 	int col = 1, row = 0;
 	int i = 0;
@@ -210,7 +210,7 @@ void matrix_render(int time)
 		}
 		i += 2;
 	}
-	usleep(time);
+	
 }
 
 int render_image_skull(float anim) {
@@ -932,12 +932,14 @@ int render_anim_tetris(int speed) {
 			draw_tetris_gamefield(gamefield);
 			draw_tetris_piece(piece,loc);
 			loc += width;
-			matrix_render(1000000/speed);
+			usleep(1000000/speed);
+			matrix_render();
 			printf("falling piece...\n");
 		}
 		loc -= width;
 		tetris_fit_piece(gamefield,loc,piece,1);
-		matrix_render(1000000/speed);
+		usleep(1000000/speed);
+		matrix_render();
 		printf("generate new piece...\n");
 	}
 	
@@ -1216,7 +1218,7 @@ int main(int argc, char *argv[])
 
     if (clear_on_exit) {
 	matrix_clear();
-	matrix_render(10000);
+	matrix_render();
 	ws2811_render(&ledstring);
     }
 
