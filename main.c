@@ -936,7 +936,6 @@ void clear_tetris_gamefield(ws2811_led_t* gamefield) {
  
 int render_anim_tetris(int speed) {
 	ws2811_led_t gamefield[width*height];
-	int i;
 	clear_tetris_gamefield(gamefield);
 	//int activepiece = 0;
 	while (running&&(!tetris_game_end(gamefield))) {
