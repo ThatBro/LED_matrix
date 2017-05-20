@@ -405,7 +405,10 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 	if (((loc%width)+(piece.w-1) > width)||((loc/height)+(piece.h-1) > height)||(loc < 0)) {
 		return 0;
 	}
-	//ws2811_led_t* block1 = NULL, block2 = NULL, block3 = NULL, block4 = NULL;
+	ws2811_led_t* block1 = NULL;
+	ws2811_led_t* block2 = NULL;
+	ws2811_led_t* block3 = NULL;
+	ws2811_led_t* block4 = NULL;
 	
 	switch (piece.type) {
 		case TETRIS_SQR:
@@ -419,10 +422,10 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 			gamefield[loc+width+1] = piece.col;
 			*/
 			
-			ws2811_led_t* block1 = &(gamefield[loc]);
-			ws2811_led_t* block2 = &(gamefield[loc+1]);
-			ws2811_led_t* block3 = &(gamefield[loc+width]);
-			ws2811_led_t* block4 = &(gamefield[loc+width+1]);
+			block1 = &(gamefield[loc]);
+			block2 = &(gamefield[loc+1]);
+			block3 = &(gamefield[loc+width]);
+			block4 = &(gamefield[loc+width+1]);
 			
 			if (*block4 != gamefield[loc+width+1]) {
 				printf("ERROR IN ASSIGNING POINTERS");
