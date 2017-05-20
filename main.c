@@ -411,22 +411,11 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 	ws2811_led_t* block4 = NULL;
 	
 	switch (piece.type) {
-		case TETRIS_SQR:
-			/*
-			if (!((gamefield[loc] == 0)&&(gamefield[loc+1] == 0)&&(gamefield[loc+width] == 0)&&(gamefied[loc+width+1] == 0))) {
-				return 0;
-			}
-			gamefield[loc] = piece.col;
-			gamefield[loc+1] = piece.col;
-			gamefield[loc+width] = piece.col;
-			gamefield[loc+width+1] = piece.col;
-			*/
-			
+		case TETRIS_SQR:			
 			block1 = &(gamefield[loc]);
 			block2 = &(gamefield[loc+1]);
 			block3 = &(gamefield[loc+width]);
 			block4 = &(gamefield[loc+width+1]);
-			
 			if (*block4 != gamefield[loc+width+1]) {
 				printf("ERROR IN ASSIGNING POINTERS");
 				return -1;
@@ -435,76 +424,206 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 			break;
 		case TETRIS_LINE:
 			if ((piece.rot == 0)||(piece.rot == 2)) {
-				if (!((gamefield[loc] == 0)&&(gamefield[loc+1] == 0)&&(gamefield[loc+2] == 0)&&(gamefield[loc+3] == 0))) {
-					return 0;
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+1]);
+				block3 = &(gamefield[loc+2]);
+				block4 = &(gamefield[loc+3]);
+				if (*block4 != gamefield[loc+3]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
 				}
-				//gamefield[loc];
 			}
 			else { 
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+width]);
+				block3 = &(gamefield[loc+width*2]);
+				block4 = &(gamefield[loc+width*3]);
+				if (*block4 != gamefield[loc+width*3]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			break;
 		case TETRIS_T:
 			if (piece.rot == 0) {
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+1]);
+				block3 = &(gamefield[loc+2]);
+				block4 = &(gamefield[loc+width+1]);
+				if (*block4 != gamefield[loc+3]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else if (piece.rot == 1) {
-				
+				block1 = &(gamefield[loc+1]);
+				block2 = &(gamefield[loc+width]);
+				block3 = &(gamefield[loc+width+1]);
+				block4 = &(gamefield[loc+width*2+1]);
+				if (*block4 != gamefield[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else if (piece.rot == 2) {
-				
+				block1 = &(gamefield[loc+1]);
+				block2 = &(gamefield[loc+width]);
+				block3 = &(gamefield[loc+width+1]);
+				block4 = &(gamefield[loc+width+2]);
+				if (*block4 != gamefield[loc+width+2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else {
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+width]);
+				block3 = &(gamefield[loc+width+1]);
+				block4 = &(gamefield[loc+width*2]);
+				if (*block4 != gamefield[loc+width*2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			break;
 		case TETRIS_L:
 			if (piece.rot == 0) {
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+width]);
+				block3 = &(gamefield[loc+width*2]);
+				block4 = &(gamefield[loc+width*2+1]);
+				if (*block4 != gamefield[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else if (piece.rot == 1) {
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+1]);
+				block3 = &(gamefield[loc+2]);
+				block4 = &(gamefield[loc+width]);
+				if (*block4 != gamefield[loc+width]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else if (piece.rot == 2) {
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+1]);
+				block3 = &(gamefield[loc+width+1]);
+				block4 = &(gamefield[loc+width*2+1]);
+				if (*block4 != gamefield[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else {
-				
+				block1 = &(gamefield[loc+2]);
+				block2 = &(gamefield[loc+width]);
+				block3 = &(gamefield[loc+width+1]);
+				block4 = &(gamefield[loc+width+2]);
+				if (*block4 != gamefield[loc+width+2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			break;
 		case TETRIS_IL:
 			if (piece.rot == 0) {
-				
+				block1 = &(gamefield[loc+1]);
+				block2 = &(gamefield[loc+width+1]);
+				block3 = &(gamefield[loc+width*2]);
+				block4 = &(gamefield[loc+width*2+1]);
+				if (*block4 != gamefield[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else if (piece.rot == 1) {
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+width]);
+				block3 = &(gamefield[loc+width+1]);
+				block4 = &(gamefield[loc+width+2]);
+				if (*block4 != gamefield[loc+width+2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else if (piece.rot == 2) {
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+1]);
+				block3 = &(gamefield[loc+width]);
+				block4 = &(gamefield[loc+width*2]);
+				if (*block4 != gamefield[loc+width*2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else {
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+1]);
+				block3 = &(gamefield[loc+2]);
+				block4 = &(gamefield[loc+width+2]);
+				if (*block4 != gamefield[loc+width+2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			break;
 		case TETRIS_S:
 			if ((piece.rot == 0)&&(piece.rot == 2)) {
-				
+				block1 = &(gamefield[loc+1]);
+				block2 = &(gamefield[loc+2]);
+				block3 = &(gamefield[loc+width]);
+				block4 = &(gamefield[loc+width+1]);
+				if (*block4 != gamefield[loc+width+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else {
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+width]);
+				block3 = &(gamefield[loc+width+1]);
+				block4 = &(gamefield[loc+width*2+1]);
+				if (*block4 != gamefield[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			break;
 		case TETRIS_IS:
 			if ((piece.rot == 0)||(piece.rot == 2)) {
-				
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+1]);
+				block3 = &(gamefield[loc+width+1]);
+				block4 = &(gamefield[loc+width+2]);
+				if (*block4 != gamefield[loc+width+2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			else {
-				
+				block1 = &(gamefield[loc+1]);
+				block2 = &(gamefield[loc+width]);
+				block3 = &(gamefield[loc+width+1]);
+				block4 = &(gamefield[loc+width*2]);
+				if (*block4 != gamefield[loc+width*2]) {
+					printf("ERROR IN ASSIGNING POINTERS");
+					return -1;
+				}
 			}
 			break;
 		default:
 			return -1;
 	}
+	if (!((*block1 == 0)&&(*block2 == 0)&&(*block3 == 0)&&(*block4 == 0))) {
+		return 0;
+	}
+	*block1 = piece.col;
+	*block2 = piece.col;
+	*block3 = piece.col;
+	*block4 = piece.col;
 	return 1;
 }
 
