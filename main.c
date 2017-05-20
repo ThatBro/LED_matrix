@@ -805,11 +805,11 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 			break;
 		case TETRIS_IL:
 			if (piece.rot == 0) {
-				block1 = &(gamefield[loc+1]);
-				block2 = &(gamefield[loc+width+1]);
-				block3 = &(gamefield[loc+width*2]);
-				block4 = &(gamefield[loc+width*2+1]);
-				if (*block4 != gamefield[loc+width*2+1]) {
+				block1 = &(matrix[loc+1]);
+				block2 = &(matrix[loc+width+1]);
+				block3 = &(matrix[loc+width*2]);
+				block4 = &(matrix[loc+width*2+1]);
+				if (*block4 != matrix[loc+width*2+1]) {
 					printf("ERROR IN ASSIGNING POINTERS");
 					return;
 				}
