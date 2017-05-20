@@ -655,9 +655,9 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 
 struct tetris_piece get_random_tetris_piece() {
 	enum tetris_pieces t = TETRIS_SQR;
-	int w = 0;
-	int h = 0;
-	switch (rand()%8) {
+	int w = 2;
+	int h = 2;
+	switch (rand()%7) {
 		case 0:
 			t = TETRIS_SQR;
 			w = 2;
