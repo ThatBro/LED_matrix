@@ -676,13 +676,14 @@ struct tetris_piece get_random_tetris_piece() {
 		.rot = 0
 	};
 	if (t == 0&&w == 0&&h == 0) {
-		return tetris_piece {
-			.col = 0,
+		struct tetris_piece p {
+			.col = COL_WHITE,
 			.type = TETRIS_SQR,
-			.w = 0,
-			.h = 0,
+			.w = 2,
+			.h = 2,
 			.rot = 0
 		};
+		return p;
 	}//dit is hier voor de "unused variable error"
 	return piece;
 }
