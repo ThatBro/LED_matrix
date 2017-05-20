@@ -1186,7 +1186,7 @@ int main(int argc, char *argv[])
     int loop_var = 0;
     while (running)
     {
-				render_anim_tetris(1000);
+				render_anim_tetris(1);
         //matrix_raise();
         //matrix_bottom();
         //render_image_skull(sin(((float)loop_var)));
