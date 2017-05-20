@@ -950,7 +950,7 @@ int render_anim_tetris(int speed) {
 		usleep(1000000/speed);
 		matrix_clear();
 		struct tetris_piece piece = get_random_tetris_piece();
-		int loc = rand()%(width-piece.w);
+		int loc = rand()%(width-(piece.w-1));
 		while (tetris_fit_piece(gamefield,loc,piece,0)&&running) {
 			usleep(1000000/speed);
 			draw_tetris_gamefield(gamefield);
