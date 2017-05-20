@@ -676,7 +676,7 @@ struct tetris_piece get_random_tetris_piece() {
 		.rot = 0
 	};
 	if (t == 0&&w == 0&&h == 0) {
-		return struct tetris_piece {
+		return tetris_piece {
 			.col = 0,
 			.type = TETRIS_SQR,
 			.w = 0,
