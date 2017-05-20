@@ -426,7 +426,7 @@ int tetris_game_end(ws2811_led_t* gamefield) {
 }
 
 int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece, int draw) {
-	if (((loc%width)+(piece.w-1) > width)||((loc/height)+(piece.h-1) > height)||(loc < 0)) {
+	if (((loc%width)+(piece.w-1) >= width)||((loc/height)+(piece.h-1) >= height)||(loc < 0)) {
 		return 0;
 	}
 	ws2811_led_t* block1 = NULL;
@@ -1205,7 +1205,7 @@ int main(int argc, char *argv[])
     int loop_var = 0;
     while (running)
     {
-				render_anim_tetris(1);
+				render_anim_tetris(4);
         //matrix_raise();
         //matrix_bottom();
         //render_image_skull(sin(((float)loop_var)));
