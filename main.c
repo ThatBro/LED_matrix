@@ -628,7 +628,7 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 }
 
 struct tetris_piece get_random_tetris_piece() {
-	enum tetris_pieces t;
+	enum tetris_pieces t = TETRIS_SQR;
 	int w = 0;
 	int h = 0;
 	switch (rand()%8) {
@@ -675,16 +675,7 @@ struct tetris_piece get_random_tetris_piece() {
 		.h = h,
 		.rot = 0
 	};
-	if (t == 0&&w == 0&&h == 0) {
-		struct tetris_piece p = {
-			.col = COL_WHITE,
-			.type = TETRIS_SQR,
-			.w = 2,
-			.h = 2,
-			.rot = 0
-		};
-		return p;
-	}//dit is hier voor de "unused variable error"
+	
 	return piece;
 }
 
