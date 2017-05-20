@@ -1,3 +1,8 @@
+THIS SOFTWARE IS BUILT UPON THE LIBRARY OF Jeremy Garff - https://github.com/jgarff/rpi_ws281x (c) 2014 jgarff
+
+My modifications are mostly in main.c, these are additional functions for an led matrix, and a different renderering function.
+NOTE: this may not work well with any regular matrix, it is mainly created for my own use, for the original library, visit the link posted above.
+
 rpi_ws281x
 ==========
 
