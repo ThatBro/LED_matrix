@@ -596,21 +596,21 @@ int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece
 			break;
 		case TETRIS_S:
 			if ((piece.rot == 0)&&(piece.rot == 2)) {
-				block1 = &(gamefield[loc+1]);
-				block2 = &(gamefield[loc+2]);
-				block3 = &(gamefield[loc+width]);
-				block4 = &(gamefield[loc+width+1]);
-				if (*block4 != gamefield[loc+width+1]) {
-					printf("ERROR IN ASSIGNING POINTERS\n");
-					return -1;
-				}
-			}
-			else {
 				block1 = &(gamefield[loc]);
 				block2 = &(gamefield[loc+width]);
 				block3 = &(gamefield[loc+width+1]);
 				block4 = &(gamefield[loc+width*2+1]);
 				if (*block4 != gamefield[loc+width*2+1]) {
+					printf("ERROR IN ASSIGNING POINTERS\n");
+					return -1;
+				}
+			}
+			else {
+				block1 = &(gamefield[loc+1]);
+				block2 = &(gamefield[loc+2]);
+				block3 = &(gamefield[loc+width]);
+				block4 = &(gamefield[loc+width+1]);
+				if (*block4 != gamefield[loc+width+1]) {
 					printf("ERROR IN ASSIGNING POINTERS\n");
 					return -1;
 				}
@@ -871,16 +871,6 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 			break;
 		case TETRIS_S:
 			if ((piece.rot == 0)&&(piece.rot == 2)) {
-				block1 = &(matrix[loc+1]);
-				block2 = &(matrix[loc+2]);
-				block3 = &(matrix[loc+width]);
-				block4 = &(matrix[loc+width+1]);
-				if (*block4 != matrix[loc+width+1]) {
-					//printf("ERROR IN ASSIGNING POINTERS\n");
-					return;
-				}
-			}
-			else {
 				block1 = &(matrix[loc]);
 				block2 = &(matrix[loc+width]);
 				block3 = &(matrix[loc+width+1]);
@@ -889,6 +879,17 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
+			}
+			else {
+				block1 = &(matrix[loc+1]);
+				block2 = &(matrix[loc+2]);
+				block3 = &(matrix[loc+width]);
+				block4 = &(matrix[loc+width+1]);
+				if (*block4 != matrix[loc+width+1]) {
+					//printf("ERROR IN ASSIGNING POINTERS\n");
+					return;
+				}
+				
 			}
 			break;
 		case TETRIS_IS:
