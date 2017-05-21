@@ -1123,7 +1123,7 @@ int tetris_check_move(int move,ws2811_led_t* gamefield, struct tetris_piece *pie
 		}
 		if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
 			if (domove) {
-				*loc =+ width;
+				*loc += width;
 			}
 			return 1;
 		}
