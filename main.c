@@ -944,6 +944,10 @@ void clear_tetris_gamefield(ws2811_led_t* gamefield) {
 }
 
 int tetris_check_state(ws2811_led_t* gamefield, struct tetris_piece piece, int loc) {
+	ws2811_led_t* block1 = NULL;
+	ws2811_led_t* block2 = NULL;
+	ws2811_led_t* block3 = NULL;
+	ws2811_led_t* block4 = NULL;
 		switch (piece.type) {
 			case TETRIS_SQR:			
 				block1 = &(gamefield[loc]);
