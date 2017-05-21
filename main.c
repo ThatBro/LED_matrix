@@ -1133,7 +1133,7 @@ int tetris_check_move(int move,ws2811_led_t* gamefield, struct tetris_piece *pie
 	}
 	else if ((move == 3)) {
 		rotate_tetris_piece(&fakepiece);
-		if (((fakeloc%width)-(fakepiece.w-1) >= 0)&&((fakeloc%width)+(fakepiece.w-1) <= 11)&&((fakeloc/width)+(fakepiece.h+1) <= 11)) {
+		if (((fakeloc%width)-(fakepiece.w-1) >= 0)&&((fakeloc%width)+(fakepiece.w-1) <= 11)&&((fakeloc/width)+(fakepiece.h-1) <= 11)) {
 			if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
 				if (domove) {
 					rotate_tetris_piece(piece);
