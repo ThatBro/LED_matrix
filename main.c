@@ -922,11 +922,11 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 }
 
 void rotate_tetris_piece(struct tetris_piece *piece) {
-	*piece.rot += 1;
-	int tmp = *piece.w;
-	*piece.w = *piece.h;
-	*piece.h = tmp;
-	*piece.rot = *piece.rot%4;
+	piece->rot += 1;
+	int tmp = piece->w;
+	piece->w = piece->h;
+	piece->h = tmp;
+	piece->rot = piece->rot%4;
 }
 
 void draw_tetris_gamefield(ws2811_led_t* gamefield) {
@@ -1122,7 +1122,7 @@ int tetris_check_move(int move,ws2811_led_t* gamefield, struct tetris_piece *pie
 		}
 	}
 	else if ((move == 3)) {
-		rotate_tetris_piece(fakepiece);
+		rotate_tetris_piece(*fakepiece);
 		if (((*loc%width)-(fakepiece.w-1) >= 0)&&((*loc%width)+(fakepiece.w-1) <= 11)&&((*loc/width)+(fakepiece.y+1) <= 11)) {
 			if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
 				if (domove) {
