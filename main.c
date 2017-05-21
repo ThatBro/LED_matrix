@@ -1085,6 +1085,10 @@ int tetris_check_state(ws2811_led_t* gamefield, struct tetris_piece piece, int l
 
 int tetris_check_move(int move,ws2811_led_t* gamefield, struct tetris_piece *piece, int *loc, int domove) {
 	int fakeloc = *loc;
+	if (&fakeloc == loc) {
+		printf("Dit mag niet");
+		
+	}
 	struct tetris_piece fakepiece = *piece;
 	if (((*loc%width)+(fakepiece.w-1) <= 11)&&(move == 0)) {
 		fakeloc = *loc + 1;
