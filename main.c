@@ -425,7 +425,7 @@ int tetris_game_end(ws2811_led_t* gamefield) {
 	return 0;
 }
 
-int tetris_fit_piece(ws2811_led_t* gamefield, int loc, struct tetris_piece piece, int draw) {
+int tetris_render_fit_piece(ws2811_led_t* gamefield, int &loc, struct tetris_piece &piece, int &draw) {
 	if (((loc%width)+(piece.w-1) >= width)||((loc/height)+(piece.h-1) >= height)||(loc < 0)) {
 		return 0;
 	}
@@ -695,7 +695,7 @@ struct tetris_piece get_random_tetris_piece() {
 			break;
 	}
 	struct tetris_piece piece = {
-		.col = ((rand()%256)<<16) + ((rand()%256)<<8) + (rand()%256),
+		.col = (((rand()%255)+1)<<16) + (((rand()%255)+1)<<8) + ((rand()%255)+1),
 		.type = t,
 		.w = w,
 		.h = h,
@@ -704,7 +704,7 @@ struct tetris_piece get_random_tetris_piece() {
 	return piece;
 }
 
-void draw_tetris_piece (struct tetris_piece piece, int loc) {
+void draw_tetris_piece (struct tetris_piece &piece, int &loc) {
 	ws2811_led_t* block1 = NULL;
 	ws2811_led_t* block2 = NULL;
 	ws2811_led_t* block3 = NULL;
@@ -921,7 +921,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 	*block4 = piece.col;
 }
 
-void rotate_tetris_piece(struct tetris_piece piece) {
+void rotate_tetris_piece(struct tetris_piece &piece) {
 	piece.rot += 1;
 	int tmp = piece.w;
 	piece.w = piece.h;
@@ -942,6 +942,199 @@ void clear_tetris_gamefield(ws2811_led_t* gamefield) {
 		gamefield[i] = 0;
 	}
 }
+
+int tetris_check_state(ws2811_led_t* gamefield, struct tetris_piece piece, int loc) {
+		switch (piece.type) {
+			case TETRIS_SQR:			
+				block1 = &(gamefield[loc]);
+				block2 = &(gamefield[loc+1]);
+				block3 = &(gamefield[loc+width]);
+				block4 = &(gamefield[loc+width+1]);
+				break;
+			case TETRIS_LINE:
+				if ((piece.rot == 0)||(piece.rot == 2)) {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+1]);
+					block3 = &(gamefield[loc+2]);
+					block4 = &(gamefield[loc+3]);
+				}
+				else { 
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+width]);
+					block3 = &(gamefield[loc+width*2]);
+					block4 = &(gamefield[loc+width*3]);
+				}
+				break;
+			case TETRIS_T:
+				if (piece.rot == 0) {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+1]);
+					block3 = &(gamefield[loc+2]);
+					block4 = &(gamefield[loc+width+1]);
+				}
+				else if (piece.rot == 1) {
+					block1 = &(gamefield[loc+1]);
+					block2 = &(gamefield[loc+width]);
+					block3 = &(gamefield[loc+width+1]);
+					block4 = &(gamefield[loc+width*2+1]);
+				}
+				else if (piece.rot == 2) {
+					block1 = &(gamefield[loc+1]);
+					block2 = &(gamefield[loc+width]);
+					block3 = &(gamefield[loc+width+1]);
+					block4 = &(gamefield[loc+width+2]);
+				}
+				else {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+width]);
+					block3 = &(gamefield[loc+width+1]);
+					block4 = &(gamefield[loc+width*2]);
+				}
+				break;
+			case TETRIS_L:
+				if (piece.rot == 0) {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+width]);
+					block3 = &(gamefield[loc+width*2]);
+					block4 = &(gamefield[loc+width*2+1]);
+				}
+				else if (piece.rot == 1) {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+1]);
+					block3 = &(gamefield[loc+2]);
+					block4 = &(gamefield[loc+width]);
+				}
+				else if (piece.rot == 2) {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+1]);
+					block3 = &(gamefield[loc+width+1]);
+					block4 = &(gamefield[loc+width*2+1]);
+				}
+				else {
+					block1 = &(gamefield[loc+2]);
+					block2 = &(gamefield[loc+width]);
+					block3 = &(gamefield[loc+width+1]);
+					block4 = &(gamefield[loc+width+2]);
+				}
+				break;
+			case TETRIS_IL:
+				if (piece.rot == 0) {
+					block1 = &(gamefield[loc+1]);
+					block2 = &(gamefield[loc+width+1]);
+					block3 = &(gamefield[loc+width*2]);
+					block4 = &(gamefield[loc+width*2+1]);
+				}
+				else if (piece.rot == 1) {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+width]);
+					block3 = &(gamefield[loc+width+1]);
+					block4 = &(gamefield[loc+width+2]);
+				}
+				else if (piece.rot == 2) {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+1]);
+					block3 = &(gamefield[loc+width]);
+					block4 = &(gamefield[loc+width*2]);
+				}
+				else {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+1]);
+					block3 = &(gamefield[loc+2]);
+					block4 = &(gamefield[loc+width+2]);
+				}
+				break;
+			case TETRIS_S:
+				if ((piece.rot == 0)&&(piece.rot == 2)) {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+width]);
+					block3 = &(gamefield[loc+width+1]);
+					block4 = &(gamefield[loc+width*2+1]);
+				}
+				else {
+					block1 = &(gamefield[loc+1]);
+					block2 = &(gamefield[loc+2]);
+					block3 = &(gamefield[loc+width]);
+					block4 = &(gamefield[loc+width+1]);
+					
+				}
+				break;
+			case TETRIS_IS:
+				if ((piece.rot == 0)||(piece.rot == 2)) {
+					block1 = &(gamefield[loc]);
+					block2 = &(gamefield[loc+1]);
+					block3 = &(gamefield[loc+width+1]);
+					block4 = &(gamefield[loc+width+2]);
+				}
+				else {
+					block1 = &(gamefield[loc+1]);
+					block2 = &(gamefield[loc+width]);
+					block3 = &(gamefield[loc+width+1]);
+					block4 = &(gamefield[loc+width*2]);
+				}
+				break;
+		}
+	if ((*block1 == 0)&&(*block2 == 0)&&(*block3 == 0)&&(*block4 == 0)) {
+		return 1;
+	}
+	return 0;
+}
+
+int tetris_check_move(int &move,ws2811_led_t* gamefield, struct tetris_piece &piece, int &loc, int domove) {
+	int fakeloc = loc;
+	struct tetris_piece fakepiece = piece;
+	if (((loc%width)+(fakepiece.w-1) <= 11)&&(move == 0)) {
+		fakeloc = loc + 1;
+		if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
+			if (domove) {
+				loc += 1;
+			}
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+	else if (((loc%width)-(fakepiece.w-1) >= 0)&&(move == 1)) {
+		fakeloc = loc - 1;
+		if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
+			if (domove) {
+				loc -= 1;
+			}
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+	else if (((loc/width)+(fakepiece.h-1) <= 11)&&(move == 2)) {
+		fakeloc = loc + width;
+		if (loc >= width*height) {
+			return 0;
+		}
+		if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
+			if (domove) {
+				loc += width;
+			}
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+	else if ((move == 3)) {
+		rotate_tetris_piece(fakepiece);
+		if (((loc%width)-(fakepiece.w-1) >= 0)&&((loc%width)+(fakepiece.w-1) <= 11)&&((loc/width)+(fakepiece.y+1) <= 11)) {
+			if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
+				if (domove) {
+					rotate_tetris_piece(piece);
+				}
+				return 1;
+			}
+		}
+		return 0;
+	}
+	return 0;
+}
  
 int render_anim_tetris(int speed) {
 	ws2811_led_t gamefield[width*height];
@@ -953,8 +1146,9 @@ int render_anim_tetris(int speed) {
 		matrix_clear();
 		struct tetris_piece piece = get_random_tetris_piece();
 		int loc = rand()%(width-(piece.w-1));
-		while (tetris_fit_piece(gamefield,loc,piece,0)&&running) {
+		while (tetris_render_fit_piece(gamefield,loc,piece,0)&&running) {
 			usleep(1000000/speed);
+			tetris_check_move(rand()%4,gamefield,piece,loc,1);
 			draw_tetris_gamefield(gamefield);
 			draw_tetris_piece(piece,loc);
 			matrix_render();
@@ -966,7 +1160,7 @@ int render_anim_tetris(int speed) {
 		}
 		if (loc > width) {
 			loc -= width;
-			tetris_fit_piece(gamefield,loc,piece,1);
+			tetris_render_fit_piece(gamefield,loc,piece,1);
 		}
 		else {
 			gamecrash = 1;
@@ -1221,7 +1415,7 @@ int main(int argc, char *argv[])
     int loop_var = 0;
     while (running)
     {
-				render_anim_tetris(4);
+				render_anim_tetris(6);
 				printf("TETRIS: simulation completed\n");
         //matrix_raise();
         //matrix_bottom();
