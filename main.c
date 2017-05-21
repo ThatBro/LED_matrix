@@ -1085,14 +1085,10 @@ int tetris_check_state(ws2811_led_t* gamefield, struct tetris_piece piece, int l
 
 int tetris_check_move(int move,ws2811_led_t* gamefield, struct tetris_piece *piece, int *loc, int domove) {
 	int fakeloc = *loc;
-	if (&fakeloc == loc) {
-		printf("Dit mag niet");
-		
-	}
 	struct tetris_piece fakepiece = *piece;
-	if (((*loc%width)+(fakepiece.w-1) <= 11)&&(move == 0)) {
+	if ((move == 0)) {
 		fakeloc = *loc + 1;
-		if (fakeloc >= width*height) {
+		if ((fakeloc >= width*height)&&((fakeloc%width)+(fakepiece.w-1) <= 11)) {
 			return 0;
 		}
 		if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
@@ -1105,9 +1101,9 @@ int tetris_check_move(int move,ws2811_led_t* gamefield, struct tetris_piece *pie
 			return 0;
 		}
 	}
-	else if (((*loc%width)-(fakepiece.w-1) >= 0)&&(move == 1)) {
+	else if ((move == 1)) {
 		fakeloc = *loc - 1;
-		if (fakeloc >= width*height) {
+		if ((fakeloc >= width*height)&&((*loc%width)-(fakepiece.w-1) >= 0)) {
 			return 0;
 		}
 		if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
@@ -1120,9 +1116,9 @@ int tetris_check_move(int move,ws2811_led_t* gamefield, struct tetris_piece *pie
 			return 0;
 		}
 	}
-	else if (((*loc/width)+(fakepiece.h-1) <= 11)&&(move == 2)) {
+	else if ((move == 2)) {
 		fakeloc = *loc + width;
-		if (fakeloc >= width*height) {
+		if ((fakeloc >= width*height)&&((*loc/width)+(fakepiece.h-1) <= 11)) {
 			return 0;
 		}
 		if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
