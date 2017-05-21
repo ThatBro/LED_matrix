@@ -749,7 +749,7 @@ void draw_tetris_piece (struct tetris_piece piece, int loc) {
 				block2 = &(matrix[loc+1]);
 				block3 = &(matrix[loc+2]);
 				block4 = &(matrix[loc+width+1]);
-				if (*block4 != matrix[loc+3]) {
+				if (*block4 != matrix[loc+width+1]) {
 					//printf("ERROR IN ASSIGNING POINTERS\n");
 					return;
 				}
@@ -945,8 +945,9 @@ void clear_tetris_gamefield(ws2811_led_t* gamefield) {
 int render_anim_tetris(int speed) {
 	ws2811_led_t gamefield[width*height];
 	clear_tetris_gamefield(gamefield);
+	int gamecrash = 0;
 	//int activepiece = 0;
-	while (running&&(!tetris_game_end(gamefield))) {
+	while (running&&(!gamecrash)&&(!tetris_game_end(gamefield))) {
 		usleep(1000000/speed);
 		matrix_clear();
 		struct tetris_piece piece = get_random_tetris_piece();
@@ -962,8 +963,13 @@ int render_anim_tetris(int speed) {
 			//printf("falling piece...\n");
 			
 		}
-		loc -= width;
-		tetris_fit_piece(gamefield,loc,piece,1);
+		if (loc > width) {
+			loc -= width;
+			tetris_fit_piece(gamefield,loc,piece,1);
+		}
+		else {
+			gamecrash = 1;
+		}
 		draw_tetris_gamefield(gamefield);
 		matrix_render();
 		//printf("generate new piece...\n");
