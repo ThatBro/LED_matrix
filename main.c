@@ -1133,7 +1133,7 @@ int tetris_check_move(int move,ws2811_led_t* gamefield, struct tetris_piece *pie
 	}
 	else if ((move == 3)) {
 		rotate_tetris_piece(&fakepiece);
-		if (((*loc%width)-(fakepiece.w-1) >= 0)&&((*loc%width)+(fakepiece.w-1) <= 11)&&((*loc/width)+(fakepiece.y+1) <= 11)) {
+		if (((*loc%width)-(fakepiece.w-1) >= 0)&&((*loc%width)+(fakepiece.w-1) <= 11)&&((*loc/width)+(fakepiece.h+1) <= 11)) {
 			if (tetris_check_state(gamefield,fakepiece,fakeloc)) {
 				if (domove) {
 					rotate_tetris_piece(piece);
@@ -1158,7 +1158,7 @@ int render_anim_tetris(int speed) {
 		int loc = rand()%(width-(piece.w-1));
 		while (tetris_render_fit_piece(gamefield,loc,piece,0)&&running) {
 			usleep(1000000/speed);
-			tetris_check_move(rand()%4,gamefield,*piece,*loc,1);
+			tetris_check_move(rand()%4,gamefield,&piece,&loc,1);
 			draw_tetris_gamefield(gamefield);
 			draw_tetris_piece(piece,loc);
 			matrix_render();
