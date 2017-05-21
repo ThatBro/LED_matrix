@@ -1221,6 +1221,7 @@ int main(int argc, char *argv[])
     while (running)
     {
 				render_anim_tetris(4);
+				printf("TETRIS: simulation completed\n");
         //matrix_raise();
         //matrix_bottom();
         //render_image_skull(sin(((float)loop_var)));
@@ -1248,7 +1249,7 @@ int main(int argc, char *argv[])
 
         // 15 frames /sec
         loop_var++;
-        usleep(1000000 / 1000);
+        //usleep(1000000 / 1000);
     }
 
     if (clear_on_exit) {
