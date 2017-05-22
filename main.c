@@ -1211,7 +1211,7 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 			}
 			if (fakeloc > width) {
 				fakeloc -= width;
-				tetris_render_fit_piece(fakegamefield,loc,piece,1);
+				tetris_render_fit_piece(fakegamefield,fakeloc,piece,1);
 				tetris_remove_line(fakegamefield);
 				scores[(rotated*width)+i] = tetris_eval_gamestate(fakegamefield);
 			}
