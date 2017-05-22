@@ -1179,7 +1179,7 @@ int tetris_remove_line(ws2811_led_t* gamefield) {
 int tetris_eval_gamestate(ws2811_led_t* gamefield) {
 	int i;
 	int score = 0;
-	int scoremult = 0;
+	int scoremult = 1;
 	for (i = 0; i < width*height; i++) {
 		if (i%width == 0) {
 			scoremult *= 10;
