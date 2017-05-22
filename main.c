@@ -1202,7 +1202,7 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 		
 		for (i = 0; i < width; i++) {
 			
-			while(tetris_render_fit_piece(fakegamefield,loc,piece,0)) {
+			while(tetris_render_fit_piece(fakegamefield,fakeloc,piece,0)) {
 				fakeloc += width;
 			}
 			if (fakeloc > width) {
