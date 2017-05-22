@@ -1258,7 +1258,7 @@ int render_anim_tetris(int speed) {
 		int loc = width/2 - (piece.w/2);
 		while (tetris_render_fit_piece(gamefield,loc,piece,0)&&running) {
 			usleep(1000000/speed);
-			tetris_check_move(rand()%4,gamefield,&piece,&loc,1);
+			tetris_check_move(tetris_best_move(gamefield,piece,loc),gamefield,&piece,&loc,1);
 			draw_tetris_gamefield(gamefield);
 			draw_tetris_piece(piece,loc);
 			matrix_render();
