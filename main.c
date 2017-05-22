@@ -1149,7 +1149,7 @@ int tetris_check_move(int move,ws2811_led_t* gamefield, struct tetris_piece *pie
 int tetris_remove_line(ws2811_led_t* gamefield) {
 	int i;
 	int lines = 0;
-	for (i = 0; i < (height-1); i++) {
+	for (i = 0; i < height; i++) {
 		
 		int w;
 		int full = 1;
@@ -1222,15 +1222,12 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 	free(fakegamefield);
 	int bestmove = 0;
 	int bestscore = 0;
-	printf("TETRIS: loc: %i, evaluated scores: ---------\n",loc);
 	for (i = 0; i < 4*width; i++) {
-		printf("move %i, score: %i\n",i,scores[i]);
 		if (scores[i] > bestscore) {
 			bestscore = scores[i];
 			bestmove = i;
 		}
 	}
-	printf("----------------------\n");
 	if ( bestmove > (width-1) ) {
 		printf("TETRIS: optimal move: rotate, score: %i\n",bestscore);
 		return 3;
@@ -1531,7 +1528,7 @@ int main(int argc, char *argv[])
     int loop_var = 0;
     while (running)
     {
-				render_anim_tetris(1);
+				render_anim_tetris(6);
 				printf("TETRIS: simulation completed\n");
         //matrix_raise();
         //matrix_bottom();
