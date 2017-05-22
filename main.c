@@ -1226,12 +1226,15 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 	free(fakegamefield);
 	int bestmove = 0;
 	int bestscore = 0;
+	printf("TETRIS: evaluated scores: ---------\n");
 	for (i = 0; i < 4*width; i++) {
+		printf("move %i, score: %i\n",i,scores[i]);
 		if (scores[i] > bestscore) {
 			bestscore = scores[i];
 			bestmove = i;
 		}
 	}
+	printf("----------------------\n");
 	if ( bestmove > (width-1) ) {
 		printf("TETRIS: optimal move: rotate, score: %i\n",bestscore);
 		return 3;
