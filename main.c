@@ -1232,21 +1232,22 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 		}
 	}
 	if ( bestmove > (width-1) ) {
+		printf("TETRIS: optimal move: rotate");
 		return 3;
 	}//obviously a rotate is needed, so that is the best move to go with
 	else {
 		if (bestmove > loc%width) {
+			printf("TETRIS: optimal move: move right");
 			return 0;
 		}
 		if (bestmove < loc%width) {
+			printf("TETRIS: optimal move: move left");
 			return 1;
 		}
 		else {
 			return 2;
 		}
 	}
-	
-	return bestmove;
 }
 
 int render_anim_tetris(int speed) {
