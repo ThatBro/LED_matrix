@@ -1205,7 +1205,7 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 	while (rotated < 4) {
 		
 		for (i = 0; i < width; i++) {
-			
+			fakeloc = i;
 			while(tetris_render_fit_piece(fakegamefield,fakeloc,piece,0)) {
 				fakeloc += width;
 			}
@@ -1217,7 +1217,7 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 			}
 			
 			memcpy(fakegamefield,gamefield,sizeof(ws2811_led_t)*width*height);
-			fakeloc = loc;
+			//fakeloc = loc;
 		}
 		
 		rotate_tetris_piece(&piece);
