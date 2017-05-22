@@ -1226,7 +1226,7 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 	free(fakegamefield);
 	int bestmove = 0;
 	int bestscore = 0;
-	printf("TETRIS: evaluated scores: ---------\n");
+	printf("TETRIS: loc: %i, evaluated scores: ---------\n",loc);
 	for (i = 0; i < 4*width; i++) {
 		printf("move %i, score: %i\n",i,scores[i]);
 		if (scores[i] > bestscore) {
