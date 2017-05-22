@@ -1153,13 +1153,13 @@ int tetris_remove_line(ws2811_led_t* gamefield) {
 		
 		int w;
 		int full = 1;
-		for (w = i*width; (w < i*(width+1))&&(full); w++) {
+		for (w = i*width; (w < (i+1)*(width))&&(full); w++) {
 			if (gamefield[w] == 0) {
 				full = 0;
 			}
 		}
 		if (full) {
-			printf("line to remove: %i",i);
+			printf("TETRIS: line to remove: %i\n",i);
 			for (w = i*width; (w < i*(width+1))&&(full); w++) {
 				gamefield[w] = 0;
 			}
@@ -1233,16 +1233,16 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 		}
 	}
 	if ( bestmove > (width-1) ) {
-		printf("TETRIS: optimal move: rotate");
+		printf("TETRIS: optimal move: rotate\n");
 		return 3;
 	}//obviously a rotate is needed, so that is the best move to go with
 	else {
 		if (bestmove > loc%width) {
-			printf("TETRIS: optimal move: move right");
+			printf("TETRIS: optimal move: move right\n");
 			return 0;
 		}
 		if (bestmove < loc%width) {
-			printf("TETRIS: optimal move: move left");
+			printf("TETRIS: optimal move: move left\ns");
 			return 1;
 		}
 		else {
