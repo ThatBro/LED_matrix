@@ -1163,8 +1163,11 @@ int tetris_remove_line(ws2811_led_t* gamefield) {
 				gamefield[w] = 0;
 			}
 			
-			for (w = i*width; w > 0; w -= 1) {
+			for (w = i*width; w >= 0; w -= 1) {
 				gamefield[w+width] = gamefield[w];
+			}
+			for (w = 0; w < width; w++) {
+				gamefield[w] = 0;
 			}
 			lines++;
 		}
@@ -1228,15 +1231,15 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 			bestmove = i;
 		}
 	}
-	if ( bestmove > width ) {
+	if ( bestmove > (width-1) ) {
 		return 3;
 	}//obviously a rotate is needed, so that is the best move to go with
 	else {
 		if (bestmove > loc%width) {
-			return 1;
+			return 0;
 		}
 		if (bestmove < loc%width) {
-			return 0;
+			return 1;
 		}
 		else {
 			return 2;
