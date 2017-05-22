@@ -1535,7 +1535,7 @@ int main(int argc, char *argv[])
     int loop_var = 0;
     while (running)
     {
-				render_anim_tetris(6);
+				render_anim_tetris(1);
 				printf("TETRIS: simulation completed\n");
         //matrix_raise();
         //matrix_bottom();
