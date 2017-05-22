@@ -1182,7 +1182,7 @@ int tetris_eval_gamestate(ws2811_led_t* gamefield) {
 	int scoremult = 0;
 	for (i = 0; i < width*height; i++) {
 		if (i%width == 0) {
-			scoremult++;
+			scoremult *= 10;
 		}
 		if (gamefield[i] == 0) {
 			score += scoremult;
