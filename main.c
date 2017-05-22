@@ -1154,13 +1154,13 @@ int tetris_remove_line(ws2811_led_t* gamefield) {
 		int w;
 		int full = 1;
 		for (w = i*width; (w < i*(width+1))&&(full); w++) {
-			if (gamefield[i*width+w] == 0) {
+			if (gamefield[w] == 0) {
 				full = 0;
 			}
 		}
 		if (full) {
 			for (w = i*width; (w < i*(width+1))&&(full); w++) {
-				gamefield[i*width+w] = 0;
+				gamefield[w] = 0;
 			}
 			
 			for (w = i*width; w > 0; w -= 1) {
