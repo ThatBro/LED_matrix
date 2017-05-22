@@ -383,6 +383,44 @@ int render_image_skull(float anim) {
 	return 0;
 }
 
+
+int render_image_bluetooth(int color) {
+	if ((width < 12)||(height < 12)) {
+		printf ("ERROR: Matrix does not fit image_bluetooth");
+		return -1;
+	}
+	matrix_clear();
+	matrix[5] = color;
+	matrix[width+5] = color;
+	matrix[width+6] = color;
+	matrix[width*2+5] = color;
+	matrix[width*2+7] = color;
+	matrix[width*3+2] = color;
+	matrix[width*3+5] = color;
+	matrix[width*3+8] = color;
+	matrix[width*4+3] = color;
+	matrix[width*4+5] = color;
+	matrix[width*4+7] = color;
+	matrix[width*5+4] = color;
+	matrix[width*5+5] = color;
+	matrix[width*5+6] = color;
+	matrix[width*6+4] = color;
+	matrix[width*6+5] = color;
+	matrix[width*6+6] = color;
+	matrix[width*7+3] = color;
+	matrix[width*7+5] = color;
+	matrix[width*7+7] = color;
+	matrix[width*8+2] = color;
+	matrix[width*8+5] = color;
+	matrix[width*8+8] = color;
+	matrix[width*9+5] = color;
+	matrix[width*9+7] = color;
+	matrix[width*10+5] = color;
+	matrix[width*10+6] = color;
+	matrix[width*11+5] = color;
+	return 0;
+}
+
 int render_anim_fire(float anim) {
 	
 	return 0;
@@ -1159,7 +1197,6 @@ int tetris_remove_line(ws2811_led_t* gamefield) {
 			}
 		}
 		if (full) {
-			printf("TETRIS: line to remove: %i\n",i);
 			for (w = i*width; (w < i*(width+1))&&(full); w++) {
 				gamefield[w] = 0;
 			}
@@ -1229,16 +1266,13 @@ int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc
 		}
 	}
 	if ( bestmove > (width-1) ) {
-		printf("TETRIS: optimal move: rotate, score: %i\n",bestscore);
 		return 3;
 	}//obviously a rotate is needed, so that is the best move to go with
 	else {
 		if (bestmove > loc%width) {
-			printf("TETRIS: optimal move: left, score: %i\n",bestscore);
 			return 0;
 		}
 		if (bestmove < loc%width) {
-			printf("TETRIS: optimal move: right, score: %i\n",bestscore);
 			return 1;
 		}
 		else {
