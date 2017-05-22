@@ -1145,7 +1145,107 @@ int tetris_check_move(int move,ws2811_led_t* gamefield, struct tetris_piece *pie
 	}
 	return 0;
 }
- 
+
+int tetris_remove_line(ws2811_led_t* gamefield) {
+	int i;
+	int lines = 0;
+	for (i = 0; i < (height-1); i++) {
+		
+		int w;
+		int full = 1;
+		for (w = i*width; (w < i*(width+1))&&(full); w++) {
+			if (gamefield[i*width+w] == 0) {
+				full = 0;
+			}
+		}
+		if (full) {
+			for (w = i*width; (w < i*(width+1))&&(full); w++) {
+				gamefield[i*width+w] = 0;
+			}
+			
+			for (w = i*width; w > 0; w -= 1) {
+				gamefield[w+width] = gamefield[w];
+			}
+			lines++;
+		}
+	}
+	return lines;
+}
+
+int tetris_eval_gamestate(ws2811_led_t* gamefield) {
+	int i;
+	int score = 0;
+	int scoremult = 0;
+	for (i = 0; i < width*height; i++) {
+		if (i%width == 0) {
+			scoremult++;
+		}
+		if (gamefield[i] == 0) {
+			score += scoremult;
+		}
+	}
+	return score;	
+}
+
+int tetris_best_move(ws2811_led_t* gamefield, struct tetris_piece piece, int loc) {
+	ws2811_led_t* fakegamefield;
+	fakegamefield = malloc(sizeof(ws2811_led_t)*width*height);
+	memcpy(fakegamefield,gamefield,sizeof(ws2811_led_t)*width*height);
+	int fakeloc = loc;
+	int rotated = 0;
+	int scores[4*width];
+	int i;
+	for (i = 0; i < 4*width; i++) {
+		scores[i] = 0;
+	}
+	while (rotated < 4) {
+		
+		for (i = 0; i < width; i++) {
+			
+			while(tetris_render_fit_piece(fakegamefield,loc,piece,0)) {
+				fakeloc += width;
+			}
+			if (fakeloc > width) {
+				fakeloc -= width;
+				tetris_render_fit_piece(fakegamefield,loc,piece,1);
+				tetris_remove_line(fakegamefield);
+				scores[(rotated*width)+i] = tetris_eval_gamestate(fakegamefield);
+			}
+			
+			memcpy(fakegamefield,gamefield,sizeof(ws2811_led_t)*width*height);
+			fakeloc = loc;
+		}
+		
+		rotate_tetris_piece(&piece);
+		rotated++;
+	}
+	free(fakegamefield);
+	int bestmove = 0;
+	int bestscore = 0;
+	for (i = 0; i < 4*width; i++) {
+		if (scores[i] > bestscore) {
+			bestscore = scores[i];
+			bestmove = i;
+		}
+	}
+	if ( bestmove > width ) {
+		return 3;
+	}//obviously a rotate is needed, so that is the best move to go with
+	else {
+		if (bestmove > loc%width) {
+			return 1;
+		}
+		if (bestmove < loc%width) {
+			return 0;
+		}
+		else {
+			return 2;
+		}
+	}
+	
+	return bestmove;
+}
+
 int render_anim_tetris(int speed) {
 	ws2811_led_t gamefield[width*height];
 	clear_tetris_gamefield(gamefield);
@@ -1155,7 +1255,7 @@ int render_anim_tetris(int speed) {
 		usleep(1000000/speed);
 		matrix_clear();
 		struct tetris_piece piece = get_random_tetris_piece();
-		int loc = rand()%(width-(piece.w-1));
+		int loc = width/2 - (piece.w/2);
 		while (tetris_render_fit_piece(gamefield,loc,piece,0)&&running) {
 			usleep(1000000/speed);
 			tetris_check_move(rand()%4,gamefield,&piece,&loc,1);
@@ -1167,14 +1267,16 @@ int render_anim_tetris(int speed) {
 			
 			//printf("falling piece...\n");
 			
-		}
+		}//loop stops when an downward iteration too much happened
 		if (loc > width) {
 			loc -= width;
 			tetris_render_fit_piece(gamefield,loc,piece,1);
-		}
+			
+		}//remove extra iteration and place piece on map
 		else {
 			gamecrash = 1;
 		}
+		tetris_remove_line(gamefield);
 		draw_tetris_gamefield(gamefield);
 		matrix_render();
 		//printf("generate new piece...\n");
