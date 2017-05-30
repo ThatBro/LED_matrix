@@ -1,10 +1,10 @@
 /*
  * newtest.c
  *
- * Copyright (c) 2014 Jeremy Garff <jer @ jers.net>
+ * Copyright (c) 2014 Jeremy Garff <jer @ jers.net> and Jelle Sinnige
  *
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
  *
@@ -435,6 +435,39 @@ enum tetris_pieces {
 	TETRIS_IL,
 	TETRIS_IS
 };
+
+int render_anim_lavalamp(int intensity,int color1, int color2) {
+	int i;
+	for (i = 0; i < width*height; i++) {
+		
+		
+	}
+	
+	
+	return 1;
+}
+
+int render_anim_ambient(int speed, int color, int color_varience) {
+	if (color_varience > 255*255*255) {
+		color_varience = 255*255*255;
+	} 
+	else if (color_varience < 0) {
+		color_varience = 0;
+	}
+	if ((color > ((255 << 8) + ( 255 << 16) + 255))||(color < 0)) {
+		color = ((128 << 8) + (128 << 16) + 128);
+		//if color != allowed, use grey
+	} 
+	
+	int i;
+	
+	for (i = 0; i < width*height; i++) {
+		
+	}
+	
+	
+	return 1;
+}
 
 struct tetris_piece {
 	int w,h,rot;
